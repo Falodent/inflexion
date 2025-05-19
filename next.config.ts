@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   images: {
     remotePatterns: [],
+    unoptimized: true,
   },
 };
 

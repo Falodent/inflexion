@@ -1,0 +1,55 @@
+@import "tailwindcss";
+@import "./font.css";
+
+@theme {
+  /* Font */
+  --font-helvetica: "HelveticaNowDisplay", sans-serif;
+  --font-helvetica-neue: "HelveticaNeue", sans-serif;
+
+  /* Black */
+  --color-black-100: #030303;
+  --color-black-200: #393939;
+  --color-black-300: #141414;
+  --color-black-400: #1e1e1e;
+  --color-black-500: #1f1f20;
+  --color-black-600: #10181e;
+  --color-black-700: #1b1e23;
+  --color-black-800: #0a0a0a;
+
+  /* Blue */
+  --color-blue-100: #2a71fa;
+
+  /* Grey */
+  --color-grey-100: #b7bcc7;
+  --color-grey-200: #928c97;
+  --color-grey-300: #fcfcfd;
+  --color-grey-400: #d6dbe1;
+  --color-grey-500: #f1f2f4;
+  --color-grey-600: #d3d8de;
+  --color-grey-700: #e2e4e9;
+
+  /* Navy */
+  --color-navy-100: #3d4452;
+  --color-navy-200: #232934;
+  --color-navy-300: #667085;
+  --color-navy-400: #878d98;
+  --color-navy-500: #202329;
+}
+
+body {
+  @apply bg-black-100 font-helvetica text-white;
+}
+
+.text-gradient {
+  background: linear-gradient(180deg, rgba(254, 254, 254, 0) 0%, #ffffff 100%);
+}
+
+/* No scrollbar */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}

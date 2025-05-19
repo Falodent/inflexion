@@ -1,0 +1,18 @@
+export const filters: string[] = [
+  "Sam Altman",
+  "Open AI",
+  "Jensen Huang",
+  "Dario Amedia",
+  "DeepSeek",
+  "Nvidia",
+  "Satya Nadella",
+  "Microsoft",
+  "Rockstar Games",
+  "Inflexion AI",
+  "Apple",
+  "Huawei",
+  "Meta",
+  "Together AI",
+  "Samsung",
+  "Ilya Sutskever",
+];

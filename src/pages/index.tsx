@@ -9,6 +9,8 @@ const Home = () => {
   const { register, watch } = useForm<{ search: string }>();
   const search = watch("search");
 
+  console.log(process.env.NODE_ENV)
+
   return (
     <>
       <Navbar register={register("search")} />

@@ -16,7 +16,7 @@ const FilterCard = ({ active, text, handleAdd, handleRemove }: Props) => {
   return (
     <div
       className={clsx(
-        "h-[42px] px-[13px] rounded-[44px] shrink-0 flex items-center justify-center gap-1 transition-all ease-in-out duration-300 mb-2",
+        "h-[42px] px-2 sm:px-[13px] rounded-[44px] shrink-0 flex items-center justify-center gap-1 transition-all ease-in-out duration-300 sm:mb-2",
         isActive
           ? "bg-navy-100 text-white cursor-default"
           : "border border-grey-400 text-black-500 hover:bg-grey-500"
@@ -27,7 +27,9 @@ const FilterCard = ({ active, text, handleAdd, handleRemove }: Props) => {
         onClick={() => handleAdd(text)}
         disabled={isActive}
       >
-        <p className="font-[500] leading-[21.8px]">{text}</p>
+        <p className="text-sm sm:text-base font-[500] leading-[21.8px]">
+          {text}
+        </p>
       </button>
 
       {isActive && (

@@ -60,12 +60,12 @@ const Filters = ({
 
   return (
     <section
-      className={clsx("w-full grid items-start gap-3 grid-cols-[1fr_42px]")}
+      className={clsx("w-full grid items-start gap-1 sm:gap-3 grid-cols-[1fr_42px]")}
     >
       <div
         className={clsx(
-          "w-full flex flex-wrap gap-3 transition-all ease-in-out duration-500 overflow-y-hidden",
-          showAll ? "max-h-[1000px]" : "max-h-[45px]"
+          "w-full flex flex-wrap gap-2 sm:gap-3 transition-all ease-in-out duration-500 overflow-y-hidden",
+          showAll ? "max-h-[2000px]" : "max-h-[45px]"
         )}
       >
         {(isExecLoading || isCompLoading) &&

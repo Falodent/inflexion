@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { UseFormRegisterReturn } from "react-hook-form";
 import clsx from "clsx";
 
 // components
@@ -6,9 +6,11 @@ import Logo from "@/components/logo";
 import Search from "@/components/search";
 import Button from "@/components/button";
 
-const Navbar = () => {
-  const { register } = useForm<{ search: string }>();
+interface Props {
+  register: UseFormRegisterReturn;
+}
 
+const Navbar = ({ register }: Props) => {
   return (
     <nav
       className={clsx(
@@ -19,7 +21,7 @@ const Navbar = () => {
       <Logo />
 
       <div className="w-full flex items-center justify-end gap-[19px] xl::gap-[118px]">
-        <Search register={register("search")} />
+        <Search register={register} />
 
         <div className="w-full shrink-0 max-w-[118px] lg:max-w-[165px]">
           <Button className="shrink-0">Subscribe</Button>

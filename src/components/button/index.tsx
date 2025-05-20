@@ -22,7 +22,7 @@ const Button = ({
   const VARIANT = {
     filled:
       "bg-blue-100 text-white xl:text-xl font-[500] leading-none border-none outline-none",
-    filledLight: "bg-grey-700 text-black-800 border-none outline-none",
+    filledLight: "bg-[#f2f3f4] text-black-800 border-none outline-none",
     border: "bg-white text-[#214aa0] border border-[#F2F2F2]",
   };
 

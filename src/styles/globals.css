@@ -6,6 +6,10 @@
   --font-helvetica: "HelveticaNowDisplay", sans-serif;
   --font-helvetica-neue: "HelveticaNeue", sans-serif;
 
+  /* Ash */
+  --color-ash-100: #d5d7da;
+  --color-ash-200: #717680;
+
   /* Black */
   --color-black-100: #030303;
   --color-black-200: #393939;
@@ -15,6 +19,7 @@
   --color-black-600: #10181e;
   --color-black-700: #1b1e23;
   --color-black-800: #0a0a0a;
+  --color-black-900: #040404;
 
   /* Blue */
   --color-blue-100: #2a71fa;
@@ -27,6 +32,8 @@
   --color-grey-500: #f1f2f4;
   --color-grey-600: #d3d8de;
   --color-grey-700: #e2e4e9;
+  --color-grey-800: #edeff2;
+  --color-grey-900: #dcdee0;
 
   /* Navy */
   --color-navy-100: #3d4452;
@@ -40,8 +47,13 @@ body {
   @apply bg-black-100 font-helvetica text-white;
 }
 
+/* Gradients */
 .text-gradient {
   background: linear-gradient(180deg, rgba(254, 254, 254, 0) 0%, #ffffff 100%);
+}
+
+.card:hover .text-gradient {
+  background: linear-gradient(180deg, rgba(234, 235, 237, 0) 0%, #f1f2f4 100%);
 }
 
 /* No scrollbar */

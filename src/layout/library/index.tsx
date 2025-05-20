@@ -1,16 +1,51 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
+import { useDebounce } from "use-debounce";
 
 // components
 import Content from "@/components/content";
 import Filters from "@/components/filters";
 import Stack from "@/components/stack";
+import ContentSkeleton from "@/components/content/skeleton";
+import Subscribe from "@/components/subscribe";
+import NoContent from "@/components/content/no-content";
 
-// content
-import { Transcript } from "@/content/transcript/transcript";
+// services
+import { useInfiniteContent } from "@/services/content.service";
 
-const Library = () => {
-  const [active, setActive] = useState<string[]>([]);
+// types
+import { ContentType } from "@/types/content";
+
+const Library = ({ search }: { search: string }) => {
+  const [debouncedSearch] = useDebounce(search, 500);
+
+  const [executives, setExecutives] = useState<string[]>([]);
+  const [companies, setCompanies] = useState<string[]>([]);
+
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteContent({
+      executive_names: executives.join(","),
+      company_names: companies.join(","),
+      search_term: debouncedSearch,
+    });
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    const target = document.getElementById("load-more-trigger");
+    if (target) observer.observe(target);
+
+    return () => {
+      if (target) observer.unobserve(target);
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
     <div
@@ -34,12 +69,40 @@ const Library = () => {
         </h1>
 
         <Stack spacing={40} className="w-full">
-          <Filters active={active} setActive={setActive} />
+          <Filters
+            activeExecutives={executives}
+            setActiveExecutives={setExecutives}
+            activeCompanies={companies}
+            setActiveCompanies={setCompanies}
+          />
 
           <Stack spacing={32} className="w-full">
-            {Transcript.map((item) => (
-              <Content key={item.id} data={item} />
-            ))}
+            {isLoading &&
+              new Array(5)
+                .fill({})
+                .map((_, index) => <ContentSkeleton key={index} />)}
+
+            {!isLoading &&
+            data?.pages.flatMap((page) => page.data).length === 0 ? (
+              <NoContent />
+            ) : (
+              data?.pages.map((page) =>
+                page.data.map((item: ContentType, index: number) => (
+                  <>
+                    <Content key={item.id} data={item} />
+
+                    {(index + 1) % 5 === 0 && <Subscribe key={item.id} />}
+                  </>
+                ))
+              )
+            )}
+
+            <div id="load-more-trigger" className="h-5" />
+
+            {isFetchingNextPage &&
+              new Array(5)
+                .fill({})
+                .map((_, index) => <ContentSkeleton key={index} />)}
           </Stack>
         </Stack>
       </Stack>

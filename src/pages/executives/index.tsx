@@ -1,21 +1,19 @@
+import Executive from "@/layout/executive";
+import Footer from "@/layout/footer";
+import Navbar from "@/layout/navbar";
 import { useForm } from "react-hook-form";
 
-// layout
-import Footer from "@/layout/footer";
-import Library from "@/layout/library";
-import Navbar from "@/layout/navbar";
-
-const Home = () => {
+const ExecutivesPage = () => {
   const { register, watch } = useForm<{ search: string }>();
   const search = watch("search");
 
   return (
     <>
       <Navbar register={register("search")} />
-      <Library search={search} />
+      <Executive search={search} />
       <Footer />
     </>
   );
 };
 
-export default Home;
+export default ExecutivesPage;

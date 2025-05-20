@@ -11,6 +11,10 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>Inflexion Transcription</title>
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        ></meta>
       </Head>
 
       <QueryClientProvider client={queryClient}>

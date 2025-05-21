@@ -119,7 +119,7 @@ const Summary = ({ data, isLoading }: Props) => {
             {isLoading ? (
               <Skeleton width="100%" height={100} />
             ) : (
-              <h4 className="text-lg font-[500] leading-[30px] tracking-[0.2px] text-navy-600 align-middle">
+              <h4 className="break-words whitespace-normal text-lg font-[500] leading-[30px] tracking-[0.2px] text-navy-600 align-middle">
                 {data?.description}
               </h4>
             )}

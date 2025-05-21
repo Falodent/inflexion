@@ -95,7 +95,7 @@ const Content = ({ data, isSubpage }: Props) => {
         </Stack>
       </div>
 
-      <h4 className="pl-[14px] lg:text-lg leading-[26px] lg:leading-[28px] tracking-[0.2px] font-[500] text-navy-300 line-clamp-2">
+      <h4 className="break-words whitespace-normal pl-[14px] lg:text-lg leading-[26px] lg:leading-[28px] tracking-[0.2px] font-[500] text-navy-300 line-clamp-2">
         {data?.description}
       </h4>
 

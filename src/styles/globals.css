@@ -53,6 +53,10 @@
   --color-navy-600: #475467;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   @apply bg-black-100 font-helvetica text-white;
 }

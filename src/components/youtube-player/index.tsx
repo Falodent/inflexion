@@ -14,7 +14,7 @@ const YouTubeEmbed = ({
 
   return (
     <Wrapper>
-      <div className="fixed top-0 left-0 bg-black/70 aspect-video w-full h-dvh py-20 md:p-20 z-50">
+      <div className="fixed top-0 left-0 bg-black/70 aspect-video w-full h-dvh py-20 md:p-20 z-50 flex items-center justify-center">
         <button
           onClick={onClose}
           className="absolute top-6 right-6 text-white z-50 cursor-pointer"
@@ -24,7 +24,7 @@ const YouTubeEmbed = ({
         </button>
 
         <iframe
-          className="w-full h-full"
+          className="w-full h-1/2 lg:h-full"
           src={`https://www.youtube.com/embed/${videoId}`}
           title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -9,6 +9,11 @@
   /* Ash */
   --color-ash-100: #d5d7da;
   --color-ash-200: #717680;
+  --color-ash-300: #595c64;
+  --color-ash-400: #d0d5dc;
+  --color-ash-500: #e2e5ea;
+  --color-ash-600: #eaecf0;
+  --color-ash-700: #f7f8fa;
 
   /* Black */
   --color-black-100: #030303;
@@ -23,6 +28,10 @@
 
   /* Blue */
   --color-blue-100: #2a71fa;
+  --color-blue-200: #e0e9fb;
+
+  /* Dark */
+  --color-dark-100: #242424;
 
   /* Grey */
   --color-grey-100: #b7bcc7;
@@ -41,10 +50,15 @@
   --color-navy-300: #667085;
   --color-navy-400: #878d98;
   --color-navy-500: #202329;
+  --color-navy-600: #475467;
 }
 
 body {
   @apply bg-black-100 font-helvetica text-white;
+}
+
+p {
+  vertical-align: middle;
 }
 
 /* Gradients */

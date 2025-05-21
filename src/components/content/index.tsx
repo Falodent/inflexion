@@ -10,13 +10,16 @@ import ListItem from "./list-item";
 import Button from "../button";
 import Circle from "../circle";
 
-// types
-import { ContentType } from "@/types/content";
+// helpers
 import { convertDate } from "@/helpers/convert-date";
 import { extractPoints } from "@/helpers/extract-point";
+import { ExecutiveImage } from "@/helpers/executive-image";
+
+// types
+import { FullContentType } from "@/types/content";
 
 interface Props {
-  data: ContentType;
+  data: FullContentType;
   isSubpage?: boolean;
 }
 
@@ -39,15 +42,18 @@ const Content = ({ data, isSubpage }: Props) => {
     >
       <div className="pl-[13px] lg:pl-[15px] flex flex-col items-start lg:flex-row lg:items-center gap-5">
         <ResponsiveImage
-          src={`png/avatar.png`}
+          src={`png/${ExecutiveImage[data?.executive_name] ?? "avatar.png"}`}
           alt={data?.executive_name}
           size="w-12 h-12 lg:w-14 lg:h-14 shrink-0"
         />
 
         <Stack spacing={2}>
-          <h3 className="text-lg lg:text-xl font-[700] leading-[24px] text-black-600">
+          <Link
+            href={`/content/${data?._id}`}
+            className="text-lg lg:text-xl font-[700] leading-[24px] text-black-600"
+          >
             {data?.title}
-          </h3>
+          </Link>
 
           <div className="flex items-center gap-2 lg:gap-3 text-navy-300 text-xs lg:text-base text-center">
             {isSubpage ? (
@@ -82,7 +88,9 @@ const Content = ({ data, isSubpage }: Props) => {
 
             <Circle />
 
-            <p className="font-[500] leading-[21.8px] uppercase">{date}</p>
+            <p className="text-sm font-[500] leading-[21.8px] uppercase">
+              {date}
+            </p>
           </div>
         </Stack>
       </div>
@@ -104,7 +112,10 @@ const Content = ({ data, isSubpage }: Props) => {
         ))}
       </Stack>
 
-      <div className="mt-[13px] pl-2 lg:pl-[15px]">
+      <Link
+        href={`/content/${data?._id}`}
+        className="mt-[13px] pl-2 lg:pl-[15px]"
+      >
         <Button
           variant="filledLight"
           size="sm"
@@ -113,7 +124,7 @@ const Content = ({ data, isSubpage }: Props) => {
           <FileText size={24} color="#878D98" />
           <p className="text-lg font-[700] leading-none">Full Summary</p>
         </Button>
-      </div>
+      </Link>
     </Stack>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import clsx from "clsx";
 import { useDebounce } from "use-debounce";
 
@@ -14,7 +14,7 @@ import NoContent from "@/components/content/no-content";
 import { useInfiniteContent } from "@/services/content.service";
 
 // types
-import { ContentType } from "@/types/content";
+import { FullContentType } from "@/types/content";
 
 const Library = ({ search }: { search: string }) => {
   const [debouncedSearch] = useDebounce(search, 500);
@@ -84,15 +84,15 @@ const Library = ({ search }: { search: string }) => {
 
             {!isLoading &&
             data?.pages.flatMap((page) => page.data).length === 0 ? (
-              <NoContent />
+              <NoContent key="empty" />
             ) : (
               data?.pages.map((page) =>
-                page.data.map((item: ContentType, index: number) => (
-                  <>
-                    <Content key={item.id} data={item} />
+                page.data.map((item: FullContentType, index: number) => (
+                  <Fragment key={item._id}>
+                    <Content key={item._id} data={item} />
 
-                    {(index + 1) % 5 === 0 && <Subscribe key={item.id} />}
-                  </>
+                    {(index + 1) % 5 === 0 && <Subscribe key={item._id} />}
+                  </Fragment>
                 ))
               )
             )}

@@ -6,7 +6,12 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   trailingSlash: true,
   images: {
-    remotePatterns: [],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "i.ytimg.com",
+      },
+    ],
     unoptimized: true,
   },
   async rewrites() {

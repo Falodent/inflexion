@@ -36,3 +36,15 @@ export const useInfiniteContent = (params: ContentParams) => {
     },
   });
 };
+
+export const useSingleContent = (id: string | string[] | undefined) => {
+  return useQuery({
+    queryKey: ["single-content"],
+    queryFn: () =>
+      networkCall({
+        url: `contents/${id}`,
+      }),
+    enabled: !!id,
+    retry: 1,
+  });
+};

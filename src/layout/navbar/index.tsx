@@ -1,11 +1,12 @@
 import { UseFormRegisterReturn } from "react-hook-form";
 import clsx from "clsx";
+import { useState } from "react";
+import Link from "next/link";
 
 // components
 import Logo from "@/components/logo";
 import Search from "@/components/search";
 import Button from "@/components/button";
-import { useState } from "react";
 
 interface Props {
   register: UseFormRegisterReturn;
@@ -27,7 +28,9 @@ const Navbar = ({ register }: Props) => {
           "pl-[26px] pr-[22px] lg:px-9"
         )}
       >
-        <Logo />
+        <Link href="/">
+          <Logo />
+        </Link>
 
         <div className="w-full flex items-center justify-end gap-[19px] xl::gap-[118px]">
           <Search

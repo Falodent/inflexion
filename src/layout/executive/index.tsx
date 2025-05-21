@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useDebounce } from "use-debounce";
 
 // components
@@ -18,7 +18,7 @@ import Subscribe from "@/components/subscribe";
 import { useInfiniteContent } from "@/services/content.service";
 
 // types
-import { ContentType } from "@/types/content";
+import { FullContentType } from "@/types/content";
 
 const Executive = ({ search }: { search: string }) => {
   const { query } = useRouter();
@@ -104,12 +104,12 @@ const Executive = ({ search }: { search: string }) => {
             <NoContent />
           ) : (
             data?.pages.map((page) =>
-              page.data.map((item: ContentType, index: number) => (
-                <>
-                  <Content key={item.id} data={item} isSubpage />
+              page.data.map((item: FullContentType, index: number) => (
+                <Fragment key={item._id}>
+                  <Content key={item._id} data={item} isSubpage />
 
-                  {(index + 1) % 5 === 0 && <Subscribe key={item.id} />}
-                </>
+                  {(index + 1) % 5 === 0 && <Subscribe key={item._id} />}
+                </Fragment>
               ))
             )
           )}

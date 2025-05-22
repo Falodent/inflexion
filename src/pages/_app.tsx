@@ -6,7 +6,16 @@ import { Toaster } from "react-hot-toast";
 import Head from "next/head";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 1000 * 60 * 60,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+      },
+    },
+  });
+
   return (
     <>
       <Head>

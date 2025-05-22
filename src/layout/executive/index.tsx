@@ -15,7 +15,7 @@ import NoContent from "@/components/content/no-content";
 import Subscribe from "@/components/subscribe";
 
 // services
-import { useInfiniteContent } from "@/services/content.service";
+import { useAllContentByExecutive } from "@/services/content.service";
 
 // types
 import { FullContentType } from "@/types/content";
@@ -27,35 +27,16 @@ const Executive = ({ search }: { search: string }) => {
   // search
   const [debouncedSearch] = useDebounce(search, 500);
 
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteContent({
-      executive_names: String(name),
-      search_term: debouncedSearch,
-    });
+  const { data: content, isLoading } = useAllContentByExecutive({
+    executive_names: String(name),
+    search_term: debouncedSearch,
+  });
 
   useEffect(() => {
     if (!name) {
       history.back();
     }
   }, [name]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
-          fetchNextPage();
-        }
-      },
-      { threshold: 1.0 }
-    );
-
-    const target = document.getElementById("load-more-trigger");
-    if (target) observer.observe(target);
-
-    return () => {
-      if (target) observer.unobserve(target);
-    };
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
     <div
@@ -87,7 +68,7 @@ const Executive = ({ search }: { search: string }) => {
 
             <div className="h-6 px-[9px] bg-grey-800 rounded-[50px]">
               <p className="text-sm font-[500] leading-[26px] text-black-600">
-                {data?.pages.flatMap((page) => page.data).length || 0} Talks
+                {content?.data?.length || 0} Talks
               </p>
             </div>
           </div>
@@ -99,27 +80,17 @@ const Executive = ({ search }: { search: string }) => {
               .fill({})
               .map((_, index) => <ContentSkeleton key={index} />)}
 
-          {!isLoading &&
-          data?.pages.flatMap((page) => page.data).length === 0 ? (
+          {!isLoading && content?.data?.length === 0 ? (
             <NoContent />
           ) : (
-            data?.pages.map((page) =>
-              page.data.map((item: FullContentType, index: number) => (
-                <Fragment key={item._id}>
-                  <Content key={item._id} data={item} isSubpage />
+            content?.data?.map((item: FullContentType, index: number) => (
+              <Fragment key={item._id}>
+                <Content key={item._id} data={item} isSubpage />
 
-                  {(index + 1) % 5 === 0 && <Subscribe key={item._id} />}
-                </Fragment>
-              ))
-            )
+                {(index + 1) % 5 === 0 && <Subscribe key={item._id} />}
+              </Fragment>
+            ))
           )}
-
-          <div id="load-more-trigger" className="h-5" />
-
-          {isFetchingNextPage &&
-            new Array(5)
-              .fill({})
-              .map((_, index) => <ContentSkeleton key={index} />)}
         </Stack>
       </Stack>
     </div>

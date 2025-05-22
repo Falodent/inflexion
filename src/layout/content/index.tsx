@@ -3,8 +3,6 @@ import { useRouter } from "next/router";
 
 // components
 import Back from "@/components/back";
-import Stack from "@/components/stack";
-import Summary from "@/components/full-summary/summary";
 import Details from "@/components/full-summary/details";
 
 // services
@@ -24,15 +22,11 @@ const FullContent = () => {
         "pt-[46px] lg:pt-[91px] pb-[109px]"
       )}
     >
-      <div className="mx-auto w-[95%] mb-[22px] lg:absolute lg:top-[103px] lg:left-[47px]">
+      <div className="mx-auto w-[95%] mb-[22px] lg:absolute lg:top-[103px] lg:left-[47px] z-40">
         <Back />
       </div>
 
-      <Stack className="w-full !gap-10 !lg:gap-16">
-        <Summary data={content?.data} isLoading={isLoading} />
-
-        <Details data={content?.data} isLoading={isLoading} />
-      </Stack>
+      <Details data={content?.data} isLoading={isLoading} />
     </div>
   );
 };

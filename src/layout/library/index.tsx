@@ -15,6 +15,8 @@ import { useInfiniteContent } from "@/services/content.service";
 
 // types
 import { FullContentType } from "@/types/content";
+import { useContentStore } from "@/store/useContentStore";
+import Wrapper from "../wrapper";
 
 const Library = ({ search }: { search: string }) => {
   const [debouncedSearch] = useDebounce(search, 500);
@@ -22,17 +24,18 @@ const Library = ({ search }: { search: string }) => {
   const [executives, setExecutives] = useState<string[]>([]);
   const [companies, setCompanies] = useState<string[]>([]);
 
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteContent({
-      executive_names: executives.join(","),
-      company_names: companies.join(","),
-      search_term: debouncedSearch,
-    });
+  const { contents, clearContents, setOffset } = useContentStore();
+
+  const { isLoading, fetchNextPage, hasNextPage } = useInfiniteContent({
+    executive_names: executives.join(","),
+    company_names: companies.join(","),
+    search_term: debouncedSearch,
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        if (entry.isIntersecting && hasNextPage && !isLoading) {
           fetchNextPage();
         }
       },
@@ -45,10 +48,15 @@ const Library = ({ search }: { search: string }) => {
     return () => {
       if (target) observer.unobserve(target);
     };
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+  }, [fetchNextPage, hasNextPage, isLoading]);
+
+  useEffect(() => {
+    clearContents();
+    setOffset(0);
+  }, [executives, companies, clearContents, setOffset, debouncedSearch]);
 
   return (
-    <div
+    <Wrapper
       className={clsx(
         "w-full rounded-[28px] mt-[12px]",
         "bg-white lg:bg-grey-300",
@@ -82,31 +90,31 @@ const Library = ({ search }: { search: string }) => {
                 .fill({})
                 .map((_, index) => <ContentSkeleton key={index} />)}
 
-            {!isLoading &&
-            data?.pages.flatMap((page) => page.data).length === 0 ? (
+            {!isLoading && contents?.length === 0 ? (
               <NoContent key="empty" />
             ) : (
-              data?.pages.map((page) =>
-                page.data.map((item: FullContentType, index: number) => (
-                  <Fragment key={item._id}>
-                    <Content key={item._id} data={item} />
+              contents?.map((item: FullContentType, index: number) => (
+                <Fragment key={item._id}>
+                  <Content key={item._id} data={item} />
 
-                    {(index + 1) % 5 === 0 && <Subscribe key={item._id} />}
-                  </Fragment>
-                ))
-              )
+                  {(index + 1) % 5 === 0 && <Subscribe key={item._id} />}
+                </Fragment>
+              ))
             )}
 
-            <div id="load-more-trigger" className="h-5" />
+            <div
+              id="load-more-trigger"
+              className={clsx("h-5", isLoading && "-mt-60 pb-50")}
+            />
 
-            {isFetchingNextPage &&
+            {isLoading &&
               new Array(5)
                 .fill({})
                 .map((_, index) => <ContentSkeleton key={index} />)}
           </Stack>
         </Stack>
       </Stack>
-    </div>
+    </Wrapper>
   );
 };
 

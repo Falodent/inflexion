@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // components
 import Overview from "../overview";
@@ -38,6 +38,7 @@ import {
   TOCData,
   ToneAndRiskData,
 } from "@/types/content";
+import Summary from "../summary";
 
 interface Props {
   data: FullContentType;
@@ -68,6 +69,16 @@ const Details = ({ data, isLoading }: Props) => {
     }
   }, [data?.investor_note]);
 
+  const elementRef = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState<number>(0);
+
+  useEffect(() => {
+    if (elementRef.current) {
+      const rect = elementRef.current.getBoundingClientRect();
+      setHeight(rect.height);
+    }
+  }, [data]);
+
   return (
     <section
       className={clsx(
@@ -75,10 +86,21 @@ const Details = ({ data, isLoading }: Props) => {
         "grid grid-cols-1 lg:grid-cols-[235px_1fr] gap-10 xl:gap-20"
       )}
     >
-      <Overview active={active} setActive={setActive} />
+      <div className="lg:flex hidden flex-col">
+        <div style={{ height }} />
+        <Overview active={active} setActive={setActive} />
+      </div>
 
-      <div className="w-full">
-        <div className="mx-auto xl:mx-0 w-full max-w-[580px] lg:max-w-[770px] flex flex-col gap-10 md:gap-[62px] px-4 xl:px-0 ">
+      <Stack className="w-full !gap-10 !lg:gap-16">
+        <div ref={elementRef}>
+          <Summary data={data} isLoading={isLoading} />
+        </div>
+
+        <div className="mx-auto xl:mx-0 w-full max-w-[580px] lg:max-w-[770px] flex flex-col gap-10 md:gap-[62px] px-4 xl:px-0">
+          <div className="flex lg:hidden">
+            <Overview active={active} setActive={setActive} />
+          </div>
+
           <section id="Key_Takeaways">
             <KeyTakeaways isLoading={isLoading} points={points} />
           </section>
@@ -111,7 +133,7 @@ const Details = ({ data, isLoading }: Props) => {
 
           <Demo />
         </div>
-      </div>
+      </Stack>
     </section>
   );
 };

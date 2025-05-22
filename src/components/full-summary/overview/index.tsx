@@ -12,7 +12,7 @@ const Overview = ({
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="w-full mt-[28px] px-4 lg:px-0">
+    <section className="sticky top-4 w-full mt-[28px]">
       <div
         role="button"
         onClick={() => setOpen(!open)}

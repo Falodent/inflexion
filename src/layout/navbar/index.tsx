@@ -32,7 +32,7 @@ const Navbar = ({ register }: Props) => {
           <Logo />
         </Link>
 
-        <div className="w-full flex items-center justify-end gap-[19px] xl::gap-[118px]">
+        <div className="w-full flex items-center justify-end gap-[19px] lg:gap-[118px]">
           <Search
             register={register}
             isOpen={isOpen}
